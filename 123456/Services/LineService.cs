@@ -12,10 +12,27 @@ public class LineService : ILineService
     {
         var result = null as List<ISendMessage>;
 
+        if (message.Contains("陰天"))
+        {
+            return  new List<ISendMessage>
+            {
+                new ImageMessage("https://i.imgur.com/L8BRKO7.jpeg")
+                
+            };  
+        }
+
+        Random rnd = new();
+        int index= rnd.Next(0, 3); //0 1 2
+        string[] imageUrl = new string[]
+        {
+            
+        }
+        
         result = new List<ISendMessage>
         {
+            new ImageMessage("https://i.imgur.com/L8BRKO7.jpeg")
             new TextMessage($"Receive a text event message \nchannelId={channelId}  \nuserId={userId}")
-        };
+        };}
         return result;
     }
 

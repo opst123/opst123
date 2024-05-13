@@ -24,6 +24,7 @@ public class LineService : ILineService
             };  
         }*/
         if(message.Contains())
+        {    
         string[] imageUrl = new string[]
         {
             "https://i.imgur.com/L8BRKO7.jpeg",

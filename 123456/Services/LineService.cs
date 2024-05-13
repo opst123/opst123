@@ -23,26 +23,30 @@ public class LineService : ILineService
                 
             };  
         }*/
-        if(message.Contains())
-        {    
-        string[] imageUrl = new string[]
+        if (message.Contains(""))
         {
-            "https://i.imgur.com/L8BRKO7.jpeg",
-            "https://i.imgur.com/L8BRKO7.jpeg",
-            "https://i.imgur.com/L8BRKO7.jpeg",
-        };
-   
-        Random rnd = new Random((int)DateTime.Now.TimeOfDay.TotalSeconds);
-        int index= rnd.Next(0, imageUrl.Length);
-     
+            string[] imageUrl = new string[]
+                    {
+                        "https://i.imgur.com/L8BRKO7.jpeg",
+                        "https://i.imgur.com/L8BRKO7.jpeg",
+                        "https://i.imgur.com/L8BRKO7.jpeg",
+                    };
+            Random rnd = new Random((int)DateTime.Now.TimeOfDay.TotalSeconds);
+            int index= rnd.Next(0, imageUrl.Length);
+            return new List<ISendMessage>
+            {
+                new ImageMessage(imageUrl[index], imageUrl[index], null),
+            };
+        }
 
-        return new List<ISendMessage>
+        result = new List<ISendMessage>
         {
-            new ImageMessage(imageUrl[index], imageUrl[index], null),
+            new TextMessage($"Receive a sticker event message \nchannelId={channelId}  \nuserId={userId}")
         };
-        //return result;
+        return result; 
     }
 
+        
     public async Task<List<ISendMessage>> ProcessStickerEventMessageAsync(string channelId, string userId,string packageId, string stickerId)
     {
         var result = null as List<ISendMessage>;

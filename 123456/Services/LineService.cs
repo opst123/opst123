@@ -49,7 +49,7 @@ public class LineService : ILineService
              
             return  new List<ISendMessage>
             {
-                new TextMessage(data[index].src,data[index].src,null),
+                new TextMessage(data[index].src, data[index].src, null),
             };
         }
 

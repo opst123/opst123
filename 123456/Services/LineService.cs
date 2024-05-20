@@ -4,8 +4,11 @@ using Line.Messaging.Webhooks;
 
 public class LineService : ILineService
 {
+    private readonly WeatherService _weatherService;
+ 
     public LineService()
     {
+        _weatherService = new WeatherService();
     }
 
     public async Task<List<ISendMessage>> ProcessTextEventMessageAsync(string channelId, string userId, string message)
@@ -23,7 +26,7 @@ public class LineService : ILineService
                 
             };  
         }*/
-        if (message.Contains(""))
+        if (message == ("天氣"))
         {
             string[] imageUrl = new string[]
                     {
@@ -36,6 +39,17 @@ public class LineService : ILineService
             return new List<ISendMessage>
             {
                 new ImageMessage(imageUrl[index], imageUrl[index], null),
+            };
+        }
+        
+        if (message.Contains("Weather"))
+        {
+            List<WeatherModel> data = await _weatherService.List();  //呼叫自己定義的服務
+            int index=  (new Random()).Next(0, data.Count);  //取亂數
+             
+            return  new List<ISendMessage>
+            {
+                new TextMessage(data[index].src,data[index].src,null),
             };
         }
 

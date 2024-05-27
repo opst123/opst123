@@ -11,26 +11,29 @@ namespace _123456.Controllers
     [ApiController]
     public class WeatherController : ControllerBase
     {
-            private readonly ILineService _lineService;
-            private readonly LineBotConfig _lineBotConfig;
-            private readonly IHttpContextAccessor _httpContextAccessor;
-            private readonly HttpContext _httpContext;
+        private readonly ILineService _lineService;
+        private readonly LineBotConfig _lineBotConfig;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly HttpContext _httpContext;
+        private WeatherService _weatherService;
 
+        public WeatherController(IServiceProvider serviceProvider, ILineService lineService, LineBotConfig config)
+        {
+            _lineService = lineService;
+            _lineBotConfig = config;
 
-            public WeatherController(IServiceProvider serviceProvider, ILineService lineService, LineBotConfig config)
-            {
-                _lineService = lineService;
-                _lineBotConfig = config;
+            _httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+            _httpContext = _httpContextAccessor.HttpContext;
+            _weatherService = new WeatherService();
+        }
 
-                _httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-                _httpContext = _httpContextAccessor.HttpContext;
-            }
-            
         // GET: api/Weather
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<WeatherModel> Get()
         {
-            return new string[] { "value1", "value2" };
+          //  return new string[] { "value1", "value2" };
+         var list = await   _weatherService.List();
+         return list;
         }
 
         // GET: api/Weather/5
@@ -40,31 +43,6 @@ namespace _123456.Controllers
             return "value";
         }
 
-        // POST: api/Weather
-        /*[HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-        */
-        [HttpPost] //POST {url}/api/linebot/run
-        public async Task<IActionResult> Post()
-        {
-            var events = await _httpContext.Request.GetWebhookEventsAsync(_lineBotConfig.channelSecret);
-            var lineBotApp = new LineBotApp(_lineBotConfig, _lineService);
-            await lineBotApp.RunAsync(events);
-
-            return Ok();
-        }
-        // PUT: api/Weather/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/Weather/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+      
     }
 }

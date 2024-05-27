@@ -28,6 +28,7 @@ public class LineService : ILineService
         }*/
         if (message == ("天氣"))
         {
+            
             string[] imageUrl = new string[]
                     {
                         "https://i.imgur.com/L8BRKO7.jpeg",
@@ -44,13 +45,16 @@ public class LineService : ILineService
         
         if (message.Contains("Weather"))
         {
-            List<WeatherModel> data = await _weatherService.List();  //呼叫自己定義的服務
-            int index=  (new Random()).Next(0, data.Count);  //取亂數
-             
+            
+            WeatherModel data = await _weatherService.List();  //呼叫自己定義的服務
+          
+            data.records.locations[0].location[0].weatherElement[0].Time[0].elementValue[0]
+            
             return  new List<ISendMessage>
             {
-                new TextMessage(data[index].src, data[index].src, null),
+                new TextMessage("111"),
             };
+            
         }
 
         result = new List<ISendMessage>

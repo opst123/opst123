@@ -11,7 +11,7 @@ public class WeatherService
          
         try
         {
-            string path = url + "/v1/rest/datastore/F-D0047-073?Authorization=" + key+"&limit=3&locationName=%E8%A5%BF%E5%B1%AF%E5%8D%80&elementName=Wx,PoP12h,AT,T";
+            string path = url + "/v1/rest/datastore/F-D0047-073?Authorization=" + key+"&locationName=%E8%A5%BF%E5%B1%AF%E5%8D%80&elementName=PoP12h";
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)

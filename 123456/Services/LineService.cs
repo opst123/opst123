@@ -43,16 +43,16 @@ public class LineService : ILineService
             };
         }
         
-        if (message.Contains("Weather"))
+        if (message.Contains("123"))
         {
             
             WeatherModel data = await _weatherService.List();  //呼叫自己定義的服務
           
-            data.records.locations[0].location[0].weatherElement[0].Time[0].elementValue[0]
+         
             
             return  new List<ISendMessage>
             {
-                new TextMessage("111"),
+                new TextMessage(   data.records.locations[0].location[0].weatherElement[0].Time[0].elementValue[0].ToString()),
             };
             
         }
